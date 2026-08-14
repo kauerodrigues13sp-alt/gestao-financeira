@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- Idioma da página -->
+<html lang="pt-BR">
+<head>
+  <!-- Codificação de caracteres para acentuação -->
+  <meta charset="UTF-8">
+  <!-- Responsividade para telas de celulares e computadores -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão Financeira</title>
+  <!-- Link para o nosso arquivo de estilo CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Container principal -->
+  <main class="container">
+    
+    <!-- Cabeçalho -->
+    <header>
+      <h1>💰 Controle Financeiro</h1>
+    </header>
+
+    <!-- CARDS DE RESUMO (Parte visual que você pediu!) -->
+    <section class="cards-container">
+      
+      <!-- Card de Receitas (Verde) -->
+      <div class="card card-receita">
+        <h3>Receitas</h3>
+        <p id="total-entradas">R$ 0,00</p>
+      </div>
+
+      <!-- Card de Despesas (Vermelho) -->
+      <div class="card card-despesa">
+        <h3>Despesas</h3>
+        <p id="total-saidas">R$ 0,00</p>
+      </div>
+
+      <!-- Card de Saldo Total (Azul/Neutro) -->
+      <div class="card card-saldo">
+        <h3>Saldo Total</h3>
+        <p id="saldo-final">R$ 0,00</p>
+      </div>
+
+    </section>
+
+    <!-- FORMULÁRIO DE LANÇAMENTO -->
+    <section class="form-container">
+      <h2>Nova Transação</h2>
+      <form id="form-transacao">
+        
+        <!-- Campo Nome/Descrição -->
+        <div class="campo">
+          <label for="descricao">Descrição</label>
+          <input type="text" id="descricao" placeholder="Ex: Mercado, Salário" required>
+        </div>
+
+        <!-- Campo Valor -->
+        <div class="campo">
+          <label for="valor">Valor (R$)</label>
+          <input type="number" id="valor" step="0.01" placeholder="0.00" required>
+        </div>
+
+        <!-- Campo Tipo (Receita ou Despesa) -->
+        <div class="campo">
+          <label for="tipo">Tipo</label>
+          <select id="tipo" required>
+            <option value="receita">Receita (+)</option>
+            <option value="despesa">Despesa (-)</option>
+          </select>
+        </div>
+
+        <!-- Botão de Salvar -->
+        <button type="submit">Adicionar Transação</button>
+      </form>
+    </section>
+
+    <!-- HISTÓRICO DE TRANSAÇÕES -->
+    <section class="historico-container">
+      <h2>Histórico de Transações</h2>
+      <ul id="lista-transacoes">
+        <!-- O JavaScript vai inserir as transações aqui em tempo real -->
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- SCRIPTS DO FIREBASE VIA CDN (Compat/Módulos) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <!-- SCRIPT PRINCIPAL DA APLICAÇÃO -->
+  <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

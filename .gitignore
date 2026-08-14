@@ -1,0 +1,2 @@
+# Ignora arquivos locais com credenciais sensíveis
+js/firebase-config.js

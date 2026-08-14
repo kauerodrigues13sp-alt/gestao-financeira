@@ -1,0 +1,209 @@
+/* ==========================================================================
+   RESET E CONFIGURAÇÃO GLOBAL
+   ========================================================================== */
+
+/* Zera margens, espaçamentos e ajusta a caixa de modelo para todos os elementos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte limpa e legível */
+}
+
+/* Estilo do fundo da página */
+body {
+  background-color: #f4f6f9; /* Tom cinza-claro suave para não cansar os olhos */
+  color: #333333;           /* Texto num tom escuro neutro para boa leitura */
+  padding: 20px;
+}
+
+/* ==========================================================================
+   CONTAINER PRINCIPAL
+   ========================================================================== */
+
+/* Limita a largura do app na tela e centraliza */
+.container {
+  max-width: 800px;
+  margin: 0 auto; /* Centraliza horizontalmente */
+  display: flex;
+  flex-direction: column;
+  gap: 24px;      /* Espaço uniforme entre cada seção (header, cards, form, lista) */
+}
+
+/* Estilo do cabeçalho */
+header h1 {
+  text-align: center;
+  color: #1a202c;
+  font-size: 1.8rem;
+}
+
+/* ==========================================================================
+   CARDS DE RESUMO
+   ========================================================================== */
+
+/* Grid que coloca os 3 cards lado a lado, mas adapta em telas menores */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Responsivo automático */
+  gap: 16px;
+}
+
+/* Estilo base de cada card individual */
+.card {
+  padding: 20px;
+  border-radius: 12px; /* Bordas arredondadas modernas */
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Sombra suave para dar efeito de elevação */
+  text-align: center;
+  transition: transform 0.2s ease; /* Animação leve ao passar o mouse */
+}
+
+/* Efeito ao passar o mouse por cima do card */
+.card:hover {
+  transform: translateY(-3px); /* Sobe 3px levemente */
+}
+
+/* Título de cada card */
+.card h3 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+/* Valor numérico dentro dos cards */
+.card p {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* ESTILIZAÇÃO ESPECÍFICA POR COR DE CARD */
+
+/* Card de Receitas (Verde) */
+.card-receita {
+  border-top: 5px solid #28a745;
+}
+.card-receita h3, .card-receita p {
+  color: #28a745;
+}
+
+/* Card de Despesas (Vermelho) */
+.card-despesa {
+  border-top: 5px solid #dc3545;
+}
+.card-despesa h3, .card-despesa p {
+  color: #dc3545;
+}
+
+/* Card de Saldo Total (Azul/Neutro) */
+.card-saldo {
+  border-top: 5px solid #007bff;
+}
+.card-saldo h3, .card-saldo p {
+  color: #007bff;
+}
+
+/* ==========================================================================
+   FORMULÁRIO DE LANÇAMENTO
+   ========================================================================== */
+
+/* Caixa do formulário */
+.form-container, .historico-container {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.form-container h2, .historico-container h2 {
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  color: #2d3748;
+}
+
+/* Organização dos campos lado a lado em telas grandes */
+#form-transacao {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  align-items: end; /* Alinha o botão com a base dos campos */
+}
+
+/* Estilização dos rótulos (labels) */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+/* Estilo dos inputs e select */
+.campo input, .campo select {
+  padding: 10px 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+/* Destaque ao clicar no campo para digitar */
+.campo input:focus, .campo select:focus {
+  border-color: #007bff;
+}
+
+/* Botão de envio */
+button[type="submit"] {
+  padding: 11px 16px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Efeito ao passar o mouse sobre o botão */
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* ==========================================================================
+   HISTÓRICO DE TRANSAÇÕES (LISTA)
+   ========================================================================== */
+
+/* Remove marcadores padrão de lista de bullets */
+#lista-transacoes {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Estilo de cada item da lista adicionado dinamicamente via JS */
+#lista-transacoes li {
+  display: flex;
+  justify-content: space-between; /* Coloca o nome na esquerda e valor na direita */
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  border-left: 5px solid #ccc; /* Borda lateral padrão */
+}
+
+/* Classe dinâmica para itens do tipo receita */
+#lista-transacoes li.item-receita {
+  border-left-color: #28a745;
+}
+
+/* Classe dinâmica para itens do tipo despesa */
+#lista-transacoes li.item-despesa {
+  border-left-color: #dc3545;
+}
