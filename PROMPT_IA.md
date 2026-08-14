@@ -23,3 +23,6 @@ Este arquivo contém o prompt estruturado utilizado para gerar a lógica matemá
 
 * **R (Response - Resposta esperada):**  
   Explicação passo a passo da lógica matemática utilizada acompanhada do bloco de código JavaScript com sintaxe ES6+ (Arrow Functions e Desestruturação).
+
+  ---
+*Projeto desenvolvido para a Avaliação Prática do Módulo 2.*
