@@ -1,66 +1,52 @@
 <!DOCTYPE html>
-<!-- Idioma da página -->
 <html lang="pt-BR">
 <head>
-  <!-- Codificação de caracteres para acentuação -->
   <meta charset="UTF-8">
-  <!-- Responsividade para telas de celulares e computadores -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestão Financeira</title>
-  <!-- Link para o nosso arquivo de estilo CSS -->
+  <title>Gestão Financeira Pessoal</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- Container principal -->
-  <main class="container">
-    
-    <!-- Cabeçalho -->
+  <div class="container">
     <header>
-      <h1>💰 Controle Financeiro</h1>
+      <div class="header-top">
+        <h1>💰 Gestão Financeira</h1>
+        <!-- Botão para alternar Modo Claro / Escuro -->
+        <button id="btn-tema" class="btn-tema">🌙 Modo Escuro</button>
+      </div>
     </header>
 
-    <!-- CARDS DE RESUMO (Parte visual que você pediu!) -->
+    <!-- CARDS DE RESUMO -->
     <section class="cards-container">
-      
-      <!-- Card de Receitas (Verde) -->
       <div class="card card-receita">
         <h3>Receitas</h3>
         <p id="total-entradas">R$ 0,00</p>
       </div>
-
-      <!-- Card de Despesas (Vermelho) -->
       <div class="card card-despesa">
         <h3>Despesas</h3>
         <p id="total-saidas">R$ 0,00</p>
       </div>
-
-      <!-- Card de Saldo Total (Azul/Neutro) -->
       <div class="card card-saldo">
         <h3>Saldo Total</h3>
         <p id="saldo-final">R$ 0,00</p>
       </div>
-
     </section>
 
     <!-- FORMULÁRIO DE LANÇAMENTO -->
     <section class="form-container">
-      <h2>Nova Transação</h2>
+      <h2>Novo Lançamento</h2>
       <form id="form-transacao">
-        
-        <!-- Campo Nome/Descrição -->
         <div class="campo">
           <label for="descricao">Descrição</label>
-          <input type="text" id="descricao" placeholder="Ex: Mercado, Salário" required>
+          <input type="text" id="descricao" placeholder="Ex: Salário, Mercado" required>
         </div>
 
-        <!-- Campo Valor -->
         <div class="campo">
           <label for="valor">Valor (R$)</label>
           <input type="number" id="valor" step="0.01" placeholder="0.00" required>
         </div>
 
-        <!-- Campo Tipo (Receita ou Despesa) -->
         <div class="campo">
           <label for="tipo">Tipo</label>
           <select id="tipo" required>
@@ -69,7 +55,6 @@
           </select>
         </div>
 
-        <!-- Botão de Salvar -->
         <button type="submit">Adicionar Transação</button>
       </form>
     </section>
@@ -78,18 +63,31 @@
     <section class="historico-container">
       <h2>Histórico de Transações</h2>
       <ul id="lista-transacoes">
-        <!-- O JavaScript vai inserir as transações aqui em tempo real -->
+        <!-- Itens inseridos via JavaScript em tempo real -->
       </ul>
     </section>
+  </div>
 
-  </main>
+  <!-- ==========================================================================
+       WIDGET OFICIAL DO VLIBRAS (ACESSIBILIDADE EM LIBRAS)
+       ========================================================================== -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 
-  <!-- SCRIPTS DO FIREBASE VIA CDN (Compat/Módulos) -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <!-- Firebase App SDK (v8) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <!-- Firebase Firestore SDK (v8) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
-  <!-- SCRIPT PRINCIPAL DA APLICAÇÃO -->
+  <!-- Script Principal da Aplicação -->
   <script type="module" src="js/main.js"></script>
-
 </body>
 </html>

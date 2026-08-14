@@ -137,3 +137,32 @@ formTransacao.addEventListener('submit', salvarTransacao);
 
 // Inicia a escuta em tempo real do banco de dados ao carregar o script
 carregarTransacoesEmTempoReal();
+// ==========================================================================
+// LÓGICA DO MODO CLARO / ESCURO (DARK MODE)
+// ==========================================================================
+
+const btnTema = document.getElementById('btn-tema');
+
+// Verifica se o usuário já tinha uma preferência salva anteriormente
+const temaSalvo = localStorage.getItem('tema');
+if (temaSalvo === 'escuro') {
+  document.body.classList.add('dark-mode');
+  btnTema.textContent = '☀️ Modo Claro';
+}
+
+// Função para alternar o tema
+const alternarTema = () => {
+  document.body.classList.toggle('dark-mode');
+  const estaEscuro = document.body.classList.contains('dark-mode');
+
+  if (estaEscuro) {
+    btnTema.textContent = '☀️ Modo Claro';
+    localStorage.setItem('tema', 'escuro');
+  } else {
+    btnTema.textContent = '🌙 Modo Escuro';
+    localStorage.setItem('tema', 'claro');
+  }
+};
+
+// Escuta o clique no botão de tema
+btnTema.addEventListener('click', alternarTema);
