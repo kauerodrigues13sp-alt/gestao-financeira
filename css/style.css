@@ -30,7 +30,11 @@ body {
   gap: 24px;      /* Espaço uniforme entre cada seção (header, cards, form, lista) */
 }
 
-/* Estilo do cabeçalho */
+/* Estilo e espaçamento do cabeçalho */
+header {
+  margin-top: 15px; /* Evita que o título fique colado no topo do navegador */
+}
+
 header h1 {
   text-align: center;
   color: #1a202c;
@@ -101,6 +105,15 @@ header h1 {
 }
 .card-saldo h3, .card-saldo p {
   color: #007bff;
+}
+
+/* Classes utilitárias para dinamismo de saldo positivo/negativo */
+.saldo-negativo {
+  color: #dc3545 !important;
+}
+
+.saldo-positivo {
+  color: #28a745 !important;
 }
 
 /* ==========================================================================
@@ -207,6 +220,7 @@ button[type="submit"]:hover {
 #lista-transacoes li.item-despesa {
   border-left-color: #dc3545;
 }
+
 /* ==========================================================================
    ESTILOS DO BOTÃO DE TEMA E MODO ESCURO
    ========================================================================== */
