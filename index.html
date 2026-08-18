@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestão Financeira Pessoal</title>
   <link rel="stylesheet" href="css/style.css">
+  
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -12,12 +17,13 @@
     <header>
       <div class="header-top">
         <h1>💰 Gestão Financeira</h1>
-        <!-- Botão para alternar Modo Claro / Escuro -->
-        <button id="btn-tema" class="btn-tema">🌙 Modo Escuro</button>
+        <div class="botoes-topo">
+          <button id="btn-relatorio" class="btn-relatorio" onclick="window.print()">🖨️ Gerar Relatório</button>
+          <button id="btn-tema" class="btn-tema">🌙 Modo Escuro</button>
+        </div>
       </div>
     </header>
 
-    <!-- CARDS DE RESUMO -->
     <section class="cards-container">
       <div class="card card-receita">
         <h3>Receitas</h3>
@@ -33,8 +39,41 @@
       </div>
     </section>
 
-    <!-- FORMULÁRIO DE LANÇAMENTO -->
-    <section class="form-container">
+    <section class="grafico-container">
+      <h2>📊 Resumo Visual por Categoria (Receitas e Despesas)</h2>
+      <div class="chart-wrapper">
+        <canvas id="grafico-categorias"></canvas>
+      </div>
+    </section>
+
+    <section class="calculadora-container no-print">
+      <h2>🧮 Calculadora & Conversor de Moedas (API Tempo Real)</h2>
+      
+      <div class="cotacoes-wrapper">
+        <div class="card-cotacao">
+          <span>🇺🇸 Dólar (USD)</span>
+          <strong id="cotacao-usd">A carregar...</strong>
+          <small id="saldo-usd">Equivalente: $ 0,00</small>
+        </div>
+        <div class="card-cotacao">
+          <span>🇪🇺 Euro (EUR)</span>
+          <strong id="cotacao-eur">A carregar...</strong>
+          <small id="saldo-eur">Equivalente: € 0,00</small>
+        </div>
+      </div>
+
+      <div class="simulador-meta">
+        <h3>🎯 Simulador de Meta Financeira</h3>
+        <div class="campos-simulador">
+          <input type="number" id="valor-meta" placeholder="Valor da Meta (R$)" step="0.01">
+          <input type="number" id="poupanca-mensal" placeholder="Poupança Mensal (R$)" step="0.01">
+          <button id="btn-calcular-meta">Simular Prazo</button>
+        </div>
+        <p id="resultado-meta" class="resultado-meta"></p>
+      </div>
+    </section>
+
+    <section class="form-container no-print">
       <h2>Novo Lançamento</h2>
       <form id="form-transacao">
         <div class="campo">
@@ -55,23 +94,30 @@
           </select>
         </div>
 
+        <div class="campo">
+          <label for="categoria">Categoria</label>
+          <select id="categoria" required>
+            <option value="Salário">💼 Salário</option>
+            <option value="Alimentação">🍔 Alimentação</option>
+            <option value="Moradia">🏠 Moradia</option>
+            <option value="Transporte">🚗 Transporte</option>
+            <option value="Lazer">🎉 Lazer</option>
+            <option value="Investimentos">📈 Investimentos</option>
+            <option value="Outros">📌 Outros</option>
+          </select>
+        </div>
+
         <button type="submit">Adicionar Transação</button>
       </form>
     </section>
 
-    <!-- HISTÓRICO DE TRANSAÇÕES -->
     <section class="historico-container">
       <h2>Histórico de Transações</h2>
-      <ul id="lista-transacoes">
-        <!-- Itens inseridos via JavaScript em tempo real -->
-      </ul>
+      <ul id="lista-transacoes"></ul>
     </section>
   </div>
 
-  <!-- ==========================================================================
-       WIDGET OFICIAL DO VLIBRAS (ACESSIBILIDADE EM LIBRAS)
-       ========================================================================== -->
-  <div vw class="enabled">
+  <div vw class="enabled no-print">
     <div vw-access-button class="active"></div>
     <div vw-plugin-wrapper>
       <div class="vw-plugin-top-wrapper"></div>
@@ -82,12 +128,6 @@
     new window.VLibras.Widget('https://vlibras.gov.br/app');
   </script>
 
-  <!-- Firebase App SDK (v8) -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <!-- Firebase Firestore SDK (v8) -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
-  <!-- Script Principal da Aplicação -->
   <script type="module" src="js/main.js"></script>
 </body>
 </html>

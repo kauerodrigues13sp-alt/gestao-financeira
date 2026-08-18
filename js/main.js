@@ -2,167 +2,304 @@
 // ARQUIVO PRINCIPAL DA APLICAÇÃO (ES6+ MODULES)
 // ==========================================================================
 
-// Importa a instância do banco de dados Firestore do arquivo de configuração
 import { db } from './firebase-config.js';
 
-// Captura os elementos do DOM (HTML) que vamos manipular
+// Elementos do DOM
 const formTransacao = document.getElementById('form-transacao');
 const listaTransacoes = document.getElementById('lista-transacoes');
 const totalEntradasEl = document.getElementById('total-entradas');
 const totalSaidasEl = document.getElementById('total-saidas');
 const saldoFinalEl = document.getElementById('saldo-final');
 
+// Elementos da Calculadora/API
+const cotacaoUsdEl = document.getElementById('cotacao-usd');
+const cotacaoEurEl = document.getElementById('cotacao-eur');
+const saldoUsdEl = document.getElementById('saldo-usd');
+const saldoEurEl = document.getElementById('saldo-eur');
+const btnCalcularMeta = document.getElementById('btn-calcular-meta');
+const resultadoMetaEl = document.getElementById('resultado-meta');
+
+let meuGrafico = null;
+let idEdicao = null;
+let valorSaldoAtual = 0;
+let valorCotacaoUSD = 0;
+let valorCotacaoEUR = 0;
+
 // ==========================================================================
-// 1. FUNÇÃO PARA FORMATAR VALORES EM MOEDA (R$)
+// 1. FORMATAR MOEDA
 // ==========================================================================
-// Arrow function para formatar números no padrão R$ 0,00
-const formatarMoeda = (valor) => {
-  return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+const formatarMoeda = (valor, moeda = 'BRL') => {
+  const op = { style: 'currency', currency: moeda };
+  const loc = moeda === 'BRL' ? 'pt-BR' : moeda === 'USD' ? 'en-US' : 'de-DE';
+  return valor.toLocaleString(loc, op);
 };
 
 // ==========================================================================
-// 2. FUNÇÃO PARA SALVAR TRANSAÇÃO NO FIRESTORE
+// 2. INTEGRAÇÃO COM API DE COTAÇÃO DE MOEDAS (AwesomeAPI)
 // ==========================================================================
-// Arrow function responsável por pegar os dados do formulário e enviar ao banco
-const salvarTransacao = async (event) => {
-  // Previne o comportamento padrão do formulário de recarregar a página
-  event.preventDefault();
-
-  // Captura os valores dos campos do formulário
-  const descricaoInput = document.getElementById('descricao').value;
-  const valorInput = parseFloat(document.getElementById('valor').value);
-  const tipoInput = document.getElementById('tipo').value;
-
-  // Monta o objeto da nova transação
-  const novaTransacao = {
-    descricao: descricaoInput,
-    valor: valorInput,
-    tipo: tipoInput,
-    data: new Date() // Salva a data atual para ordenação
-  };
-
+const buscarCotacoesMoedas = async () => {
   try {
-    // Adiciona o novo documento na coleção "transacoes" do Firestore
-    await db.collection('transacoes').add(novaTransacao);
-    
-    // Limpa o formulário após salvar com sucesso
-    formTransacao.reset();
+    const resposta = await fetch('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL');
+    const dados = await resposta.json();
+
+    valorCotacaoUSD = parseFloat(dados.USDBRL.bid);
+    valorCotacaoEUR = parseFloat(dados.EURBRL.bid);
+
+    cotacaoUsdEl.textContent = `1 USD = ${formatarMoeda(valorCotacaoUSD)}`;
+    cotacaoEurEl.textContent = `1 EUR = ${formatarMoeda(valorCotacaoEUR)}`;
+
+    atualizarConversaoSaldo();
   } catch (erro) {
-    console.error("Erro ao salvar transação:", erro);
+    console.error("Erro ao procurar cotações da API:", erro);
+    cotacaoUsdEl.textContent = "Erro ao carregar";
+    cotacaoEurEl.textContent = "Erro ao carregar";
+  }
+};
+
+const atualizarConversaoSaldo = () => {
+  if (valorCotacaoUSD > 0) {
+    const emDolar = valorSaldoAtual / valorCotacaoUSD;
+    saldoUsdEl.textContent = `Equivalente: ${formatarMoeda(emDolar, 'USD')}`;
+  }
+  if (valorCotacaoEUR > 0) {
+    const emEuro = valorSaldoAtual / valorCotacaoEUR;
+    saldoEurEl.textContent = `Equivalente: ${formatarMoeda(emEuro, 'EUR')}`;
   }
 };
 
 // ==========================================================================
-// 3. FUNÇÃO PARA CALCULAR E ATUALIZAR O SALDO (RESUMO)
+// 3. SIMULADOR DE METAS (CALCULADORA)
 // ==========================================================================
-// Arrow function que calcula totais e aplica no visual dos cards
+const calcularMeta = () => {
+  const valorMeta = parseFloat(document.getElementById('valor-meta').value);
+  const poupancaMensal = parseFloat(document.getElementById('poupanca-mensal').value);
+
+  if (isNaN(valorMeta) || valorMeta <= 0) {
+    resultadoMetaEl.textContent = "⚠️ Insira um valor válido para a meta.";
+    return;
+  }
+
+  const aporte = (!isNaN(poupancaMensal) && poupancaMensal > 0) ? poupancaMensal : valorSaldoAtual;
+
+  if (aporte <= 0) {
+    resultadoMetaEl.textContent = "⚠️ Defina uma poupança mensal ou acumule um saldo positivo para calcular.";
+    return;
+  }
+
+  const meses = Math.ceil(valorMeta / aporte);
+  resultadoMetaEl.textContent = `🎯 Alcançará a sua meta de ${formatarMoeda(valorMeta)} em cerca de ${meses} mês(es) guardando ${formatarMoeda(aporte)}/mês.`;
+};
+
+// ==========================================================================
+// 4. SALVAR OU EDITAR TRANSAÇÃO NO FIRESTORE
+// ==========================================================================
+const salvarTransacao = async (event) => {
+  event.preventDefault();
+
+  const descricaoInput = document.getElementById('descricao').value;
+  const valorInput = Math.abs(parseFloat(document.getElementById('valor').value));
+  const tipoInput = document.getElementById('tipo').value;
+  const categoriaInput = document.getElementById('categoria').value;
+
+  const dadosTransacao = {
+    descricao: descricaoInput,
+    valor: valorInput,
+    tipo: tipoInput,
+    categoria: categoriaInput,
+    data: new Date()
+  };
+
+  try {
+    if (idEdicao) {
+      await db.collection('transacoes').doc(idEdicao).update(dadosTransacao);
+      idEdicao = null;
+      document.querySelector('button[type="submit"]').textContent = 'Adicionar Transação';
+    } else {
+      await db.collection('transacoes').add(dadosTransacao);
+    }
+
+    formTransacao.reset();
+  } catch (erro) {
+    console.error("Erro ao salvar/editar transação:", erro);
+  }
+};
+
+// ==========================================================================
+// 5. EXCLUIR TRANSAÇÃO
+// ==========================================================================
+window.excluirTransacao = async (id) => {
+  if (confirm("Tem certeza que deseja excluir esta transação?")) {
+    try {
+      await db.collection('transacoes').doc(id).delete();
+    } catch (erro) {
+      console.error("Erro ao excluir transação:", erro);
+    }
+  }
+};
+
+// ==========================================================================
+// 6. PREPARAR EDIÇÃO DE TRANSAÇÃO
+// ==========================================================================
+window.prepararEdicao = (id, descricao, valor, tipo, categoria) => {
+  document.getElementById('descricao').value = descricao;
+  document.getElementById('valor').value = valor;
+  document.getElementById('tipo').value = tipo;
+  document.getElementById('categoria').value = categoria || 'Outros';
+
+  idEdicao = id;
+  document.querySelector('button[type="submit"]').textContent = 'Atualizar Transação';
+};
+
+// ==========================================================================
+// 7. CALCULAR RESUMO DE SALDO
+// ==========================================================================
 const atualizarResumo = (transacoes) => {
   let entradas = 0;
   let saidas = 0;
 
-  // Percorre cada transação para somar entradas e saídas
   transacoes.forEach((transacao) => {
-    // DESESTRUTURAÇÃO DE OBJETOS (Requisito da prova!)
     const { valor, tipo } = transacao;
+    const valorPositivo = Math.abs(valor);
 
     if (tipo === 'receita') {
-      entradas += valor;
+      entradas += valorPositivo;
     } else if (tipo === 'despesa') {
-      saidas += valor;
+      saidas += valorPositivo;
     }
   });
 
-  // Calcula o saldo total
-  const saldoTotal = entradas - saidas;
+  valorSaldoAtual = entradas - saidas;
 
-  // Atualiza os textos nos Cards HTML formatando como Moeda (R$)
   totalEntradasEl.textContent = formatarMoeda(entradas);
   totalSaidasEl.textContent = formatarMoeda(saidas);
-  saldoFinalEl.textContent = formatarMoeda(saldoTotal);
+  saldoFinalEl.textContent = formatarMoeda(valorSaldoAtual);
+
+  atualizarConversaoSaldo();
 };
 
 // ==========================================================================
-// 4. FUNÇÃO PARA ESCUTAR MUDANÇAS EM TEMPO REAL (onSnapshot)
+// 8. ATUALIZAR GRÁFICO (RECEITAS E DESPESAS POR CATEGORIA)
 // ==========================================================================
-// Arrow function que escuta o banco de dados e desenha a lista na tela
+const atualizarGrafico = (transacoes) => {
+  const canvas = document.getElementById('grafico-categorias');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  const categoriasTotais = {};
+
+  transacoes.forEach((transacao) => {
+    const cat = transacao.categoria ? `${transacao.categoria} (${transacao.tipo === 'receita' ? '+' : '-'})` : 'Outros';
+    categoriasTotais[cat] = (categoriasTotais[cat] || 0) + Math.abs(transacao.valor);
+  });
+
+  const labels = Object.keys(categoriasTotais);
+  const data = Object.values(categoriasTotais);
+
+  const paletaCores = [
+    '#28a745', '#3182ce', '#e53e3e', '#dd6b20', 
+    '#805ad5', '#d69e2e', '#319795', '#d53f8c'
+  ];
+
+  if (meuGrafico) {
+    meuGrafico.destroy();
+  }
+
+  meuGrafico = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: labels.length > 0 ? labels : ['Sem Lançamentos'],
+      datasets: [{
+        data: data.length > 0 ? data : [1],
+        backgroundColor: labels.length > 0 
+          ? paletaCores.slice(0, labels.length)
+          : ['#e2e8f0']
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }
+  });
+};
+
+// ==========================================================================
+// 9. ESCUTAR MUDANÇAS EM TEMPO REAL (onSnapshot)
+// ==========================================================================
 const carregarTransacoesEmTempoReal = () => {
-  // Conecta na coleção "transacoes" e ordena pelas mais recentes
   db.collection('transacoes')
     .orderBy('data', 'desc')
     .onSnapshot((snapshot) => {
-      // Limpa a lista atual para não duplicar itens na tela
       listaTransacoes.innerHTML = '';
-
       const listaParaCalculo = [];
 
-      // Loop pelos documentos retornados do Firestore
       snapshot.forEach((doc) => {
-        // Recupera os dados do documento
+        const id = doc.id;
         const dados = doc.data();
+        const { descricao, valor, tipo, categoria } = dados;
 
-        // DESESTRUTURAÇÃO DE OBJETOS (Requisito da prova!)
-        const { descricao, valor, tipo } = dados;
+        listaParaCalculo.push({ valor, tipo, categoria });
 
-        // Guarda os dados na lista para enviar ao calculador de saldo
-        listaParaCalculo.push({ valor, tipo });
-
-        // Cria o elemento de item da lista (li)
         const li = document.createElement('li');
-        
-        // Aplica a classe CSS correspondente para a borda (item-receita ou item-despesa)
         li.classList.add(tipo === 'receita' ? 'item-receita' : 'item-despesa');
 
-        // Define o conteúdo interno do item
         const sinal = tipo === 'receita' ? '+' : '-';
+        const tagCategoria = categoria ? `<small class="tag-cat">[${categoria}]</small>` : '';
+
         li.innerHTML = `
-          <span>${descricao}</span>
-          <strong>${sinal} ${formatarMoeda(valor)}</strong>
+          <div class="info-item">
+            <span><strong>${descricao}</strong> ${tagCategoria}</span>
+            <span class="valor-item">${sinal} ${formatarMoeda(Math.abs(valor))}</span>
+          </div>
+          <div class="acoes-item no-print">
+            <button class="btn-acao btn-editar" onclick="prepararEdicao('${id}', '${descricao}', ${valor}, '${tipo}', '${categoria || 'Outros'}')">✏️</button>
+            <button class="btn-acao btn-excluir" onclick="excluirTransacao('${id}')">🗑️</button>
+          </div>
         `;
 
-        // Adiciona o item à lista no HTML
         listaTransacoes.appendChild(li);
       });
 
-      // Atualiza os cards de saldo com os dados mais recentes
       atualizarResumo(listaParaCalculo);
+      atualizarGrafico(listaParaCalculo);
     });
 };
 
-// ==========================================================================
-// OUVINTES DE EVENTOS E INICIALIZAÇÃO
-// ==========================================================================
-
-// Escuta o envio do formulário para chamar a função de salvar
+// Eventos e Inicialização
 formTransacao.addEventListener('submit', salvarTransacao);
+if (btnCalcularMeta) btnCalcularMeta.addEventListener('click', calcularMeta);
 
-// Inicia a escuta em tempo real do banco de dados ao carregar o script
 carregarTransacoesEmTempoReal();
-// ==========================================================================
-// LÓGICA DO MODO CLARO / ESCURO (DARK MODE)
-// ==========================================================================
+buscarCotacoesMoedas();
 
+// ==========================================================================
+// MODO ESCURO
+// ==========================================================================
 const btnTema = document.getElementById('btn-tema');
-
-// Verifica se o usuário já tinha uma preferência salva anteriormente
 const temaSalvo = localStorage.getItem('tema');
+
 if (temaSalvo === 'escuro') {
   document.body.classList.add('dark-mode');
-  btnTema.textContent = '☀️ Modo Claro';
+  if (btnTema) btnTema.textContent = '☀️ Modo Claro';
 }
 
-// Função para alternar o tema
 const alternarTema = () => {
   document.body.classList.toggle('dark-mode');
   const estaEscuro = document.body.classList.contains('dark-mode');
 
   if (estaEscuro) {
-    btnTema.textContent = '☀️ Modo Claro';
+    if (btnTema) btnTema.textContent = '☀️ Modo Claro';
     localStorage.setItem('tema', 'escuro');
   } else {
-    btnTema.textContent = '🌙 Modo Escuro';
+    if (btnTema) btnTema.textContent = '🌙 Modo Escuro';
     localStorage.setItem('tema', 'claro');
   }
 };
 
-// Escuta o clique no botão de tema
-btnTema.addEventListener('click', alternarTema);
+if (btnTema) {
+  btnTema.addEventListener('click', alternarTema);
+}

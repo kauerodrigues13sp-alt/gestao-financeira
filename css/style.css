@@ -295,3 +295,261 @@ body.dark-mode .btn-tema {
 body.dark-mode .btn-tema:hover {
   background-color: #444444;
 }
+
+/* ==========================================================================
+   ESTILO DO GRÁFICO
+   ========================================================================== */
+.grafico-container {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.grafico-container h2 {
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  color: #2d3748;
+}
+
+.chart-wrapper {
+  position: relative;
+  height: 250px;
+  width: 100%;
+}
+
+body.dark-mode .grafico-container {
+  background-color: #1e1e1e;
+}
+
+body.dark-mode .grafico-container h2 {
+  color: #e0e0e0;
+}
+
+/* ==========================================================================
+   ESTILOS DAS AÇÕES DA LISTA (EDITAR / EXCLUIR) E GRÁFICO
+   ========================================================================== */
+
+.grafico-container {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.chart-wrapper {
+  position: relative;
+  height: 260px;
+  width: 100%;
+}
+
+.tag-cat {
+  color: #718096;
+  font-size: 0.8rem;
+  margin-left: 6px;
+}
+
+#lista-transacoes li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.valor-item {
+  font-weight: bold;
+}
+
+.acoes-item {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-acao {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.btn-acao:hover {
+  background-color: #edf2f7;
+}
+
+body.dark-mode .btn-acao:hover {
+  background-color: #4a5568;
+}
+
+body.dark-mode .tag-cat {
+  color: #a0aec0;
+}
+
+/* ==========================================================================
+   BOTÕES DO TOPO E RELATÓRIO
+   ========================================================================== */
+.botoes-topo {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-relatorio {
+  padding: 8px 14px;
+  background-color: #3182ce;
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-relatorio:hover {
+  background-color: #2b6cb0;
+}
+
+/* ==========================================================================
+   REGRAS DE IMPRESSÃO (GERAR RELATÓRIO PDF)
+   ========================================================================== */
+@media print {
+  /* Esconde o formulário, botões de ação e VLibras ao imprimir */
+  .no-print, .botoes-topo, #form-transacao, .acoes-item, .enabled {
+    display: none !important;
+  }
+
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 100%;
+  }
+
+  .card, .grafico-container, .historico-container {
+    box-shadow: none !important;
+    border: 1px solid #ddd;
+  }
+}
+
+/* ==========================================================================
+   ESTILOS DA CALCULADORA E CONVERSOR DE MOEDAS (API)
+   ========================================================================== */
+.calculadora-container {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.calculadora-container h2 {
+  font-size: 1.2rem;
+  color: #2d3748;
+}
+
+.cotacoes-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.card-cotacao {
+  background-color: #f7fafc;
+  border: 1px solid #e2e8f0;
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-cotacao strong {
+  font-size: 1.1rem;
+  color: #2b6cb0;
+}
+
+.card-cotacao small {
+  color: #4a5568;
+  font-weight: 600;
+}
+
+.simulador-meta {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 16px;
+}
+
+.simulador-meta h3 {
+  font-size: 1rem;
+  margin-bottom: 12px;
+  color: #4a5568;
+}
+
+.campos-simulador {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.campos-simulador input {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+}
+
+#btn-calcular-meta {
+  padding: 8px 12px;
+  background-color: #38a169;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#btn-calcular-meta:hover {
+  background-color: #2f855a;
+}
+
+.resultado-meta {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #2b6cb0;
+}
+
+/* Modo Escuro para Calculadora */
+body.dark-mode .calculadora-container {
+  background-color: #1e1e1e;
+}
+
+body.dark-mode .calculadora-container h2,
+body.dark-mode .simulador-meta h3 {
+  color: #e0e0e0;
+}
+
+body.dark-mode .card-cotacao {
+  background-color: #2b2b2b;
+  border-color: #444;
+}
+
+body.dark-mode .card-cotacao small {
+  color: #cbd5e0;
+}
+
+body.dark-mode .campos-simulador input {
+  background-color: #2b2b2b;
+  color: white;
+  border-color: #444;
+}
