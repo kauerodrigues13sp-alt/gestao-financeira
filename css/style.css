@@ -2,18 +2,16 @@
    RESET E CONFIGURAÇÃO GLOBAL
    ========================================================================== */
 
-/* Zera margens, espaçamentos e ajusta a caixa de modelo para todos os elementos */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte limpa e legível */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Estilo do fundo da página */
 body {
-  background-color: #f4f6f9; /* Tom cinza-claro suave para não cansar os olhos */
-  color: #333333;           /* Texto num tom escuro neutro para boa leitura */
+  background-color: #f4f6f9;
+  color: #333333;
   padding: 20px;
 }
 
@@ -21,18 +19,16 @@ body {
    CONTAINER PRINCIPAL
    ========================================================================== */
 
-/* Limita a largura do app na tela e centraliza */
 .container {
   max-width: 800px;
-  margin: 0 auto; /* Centraliza horizontalmente */
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 24px;      /* Espaço uniforme entre cada seção (header, cards, form, lista) */
+  gap: 24px;
 }
 
-/* Estilo e espaçamento do cabeçalho */
 header {
-  margin-top: 15px; /* Evita que o título fique colado no topo do navegador */
+  margin-top: 15px;
 }
 
 header h1 {
@@ -45,29 +41,25 @@ header h1 {
    CARDS DE RESUMO
    ========================================================================== */
 
-/* Grid que coloca os 3 cards lado a lado, mas adapta em telas menores */
 .cards-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Responsivo automático */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
 }
 
-/* Estilo base de cada card individual */
 .card {
   padding: 20px;
-  border-radius: 12px; /* Bordas arredondadas modernas */
+  border-radius: 12px;
   background-color: #ffffff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Sombra suave para dar efeito de elevação */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   text-align: center;
-  transition: transform 0.2s ease; /* Animação leve ao passar o mouse */
+  transition: transform 0.2s ease;
 }
 
-/* Efeito ao passar o mouse por cima do card */
 .card:hover {
-  transform: translateY(-3px); /* Sobe 3px levemente */
+  transform: translateY(-3px);
 }
 
-/* Título de cada card */
 .card h3 {
   font-size: 0.9rem;
   text-transform: uppercase;
@@ -75,15 +67,11 @@ header h1 {
   margin-bottom: 8px;
 }
 
-/* Valor numérico dentro dos cards */
 .card p {
   font-size: 1.5rem;
   font-weight: bold;
 }
 
-/* ESTILIZAÇÃO ESPECÍFICA POR COR DE CARD */
-
-/* Card de Receitas (Verde) */
 .card-receita {
   border-top: 5px solid #28a745;
 }
@@ -91,7 +79,6 @@ header h1 {
   color: #28a745;
 }
 
-/* Card de Despesas (Vermelho) */
 .card-despesa {
   border-top: 5px solid #dc3545;
 }
@@ -99,7 +86,6 @@ header h1 {
   color: #dc3545;
 }
 
-/* Card de Saldo Total (Azul/Neutro) */
 .card-saldo {
   border-top: 5px solid #007bff;
 }
@@ -107,7 +93,6 @@ header h1 {
   color: #007bff;
 }
 
-/* Classes utilitárias para dinamismo de saldo positivo/negativo */
 .saldo-negativo {
   color: #dc3545 !important;
 }
@@ -117,10 +102,9 @@ header h1 {
 }
 
 /* ==========================================================================
-   FORMULÁRIO DE LANÇAMENTO
+   FORMULÁRIO DE LANÇAMENTO E HISTÓRICO
    ========================================================================== */
 
-/* Caixa do formulário */
 .form-container, .historico-container {
   background-color: #ffffff;
   padding: 24px;
@@ -134,15 +118,13 @@ header h1 {
   color: #2d3748;
 }
 
-/* Organização dos campos lado a lado em telas grandes */
 #form-transacao {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 16px;
-  align-items: end; /* Alinha o botão com a base dos campos */
+  align-items: end;
 }
 
-/* Estilização dos rótulos (labels) */
 .campo {
   display: flex;
   flex-direction: column;
@@ -155,7 +137,6 @@ header h1 {
   color: #4a5568;
 }
 
-/* Estilo dos inputs e select */
 .campo input, .campo select {
   padding: 10px 12px;
   border: 1px solid #cbd5e0;
@@ -165,12 +146,10 @@ header h1 {
   transition: border-color 0.2s;
 }
 
-/* Destaque ao clicar no campo para digitar */
 .campo input:focus, .campo select:focus {
   border-color: #007bff;
 }
 
-/* Botão de envio */
 button[type="submit"] {
   padding: 11px 16px;
   background-color: #007bff;
@@ -183,16 +162,14 @@ button[type="submit"] {
   transition: background-color 0.2s ease;
 }
 
-/* Efeito ao passar o mouse sobre o botão */
 button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
 /* ==========================================================================
-   HISTÓRICO DE TRANSAÇÕES (LISTA)
+   HISTÓRICO DE TRANSAÇÕES
    ========================================================================== */
 
-/* Remove marcadores padrão de lista de bullets */
 #lista-transacoes {
   list-style: none;
   display: flex;
@@ -200,39 +177,34 @@ button[type="submit"]:hover {
   gap: 10px;
 }
 
-/* Estilo de cada item da lista adicionado dinamicamente via JS */
 #lista-transacoes li {
   display: flex;
-  justify-content: space-between; /* Coloca o nome na esquerda e valor na direita */
+  justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
   background-color: #f8f9fa;
   border-radius: 6px;
-  border-left: 5px solid #ccc; /* Borda lateral padrão */
+  border-left: 5px solid #ccc;
 }
 
-/* Classe dinâmica para itens do tipo receita */
 #lista-transacoes li.item-receita {
   border-left-color: #28a745;
 }
 
-/* Classe dinâmica para itens do tipo despesa */
 #lista-transacoes li.item-despesa {
   border-left-color: #dc3545;
 }
 
 /* ==========================================================================
-   ESTILOS DO BOTÃO DE TEMA E MODO ESCURO
+   BOTÃO DE TEMA E MODO ESCURO
    ========================================================================== */
 
-/* Alinhamento do cabeçalho com o botão */
 .header-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* Botão de alternar tema */
 .btn-tema {
   padding: 8px 14px;
   background-color: #e2e8f0;
@@ -248,10 +220,6 @@ button[type="submit"]:hover {
 .btn-tema:hover {
   background-color: #cbd5e0;
 }
-
-/* ==========================================================================
-   CLASSES DO MODO ESCURO (DARK MODE)
-   ========================================================================== */
 
 body.dark-mode {
   background-color: #121212;
@@ -297,8 +265,9 @@ body.dark-mode .btn-tema:hover {
 }
 
 /* ==========================================================================
-   ESTILO DO GRÁFICO
+   GRÁFICO
    ========================================================================== */
+
 .grafico-container {
   background-color: #ffffff;
   padding: 24px;
@@ -327,32 +296,13 @@ body.dark-mode .grafico-container h2 {
 }
 
 /* ==========================================================================
-   ESTILOS DAS AÇÕES DA LISTA (EDITAR / EXCLUIR) E GRÁFICO
+   AÇÕES DA LISTA (EDITAR / EXCLUIR)
    ========================================================================== */
-
-.grafico-container {
-  background-color: #ffffff;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
-
-.chart-wrapper {
-  position: relative;
-  height: 260px;
-  width: 100%;
-}
 
 .tag-cat {
   color: #718096;
   font-size: 0.8rem;
   margin-left: 6px;
-}
-
-#lista-transacoes li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .info-item {
@@ -395,6 +345,7 @@ body.dark-mode .tag-cat {
 /* ==========================================================================
    BOTÕES DO TOPO E RELATÓRIO
    ========================================================================== */
+
 .botoes-topo {
   display: flex;
   gap: 10px;
@@ -416,11 +367,7 @@ body.dark-mode .tag-cat {
   background-color: #2b6cb0;
 }
 
-/* ==========================================================================
-   REGRAS DE IMPRESSÃO (GERAR RELATÓRIO PDF)
-   ========================================================================== */
 @media print {
-  /* Esconde o formulário, botões de ação e VLibras ao imprimir */
   .no-print, .botoes-topo, #form-transacao, .acoes-item, .enabled {
     display: none !important;
   }
@@ -442,8 +389,9 @@ body.dark-mode .tag-cat {
 }
 
 /* ==========================================================================
-   ESTILOS DA CALCULADORA E CONVERSOR DE MOEDAS (API)
+   CALCULADORA E CONVERSOR
    ========================================================================== */
+
 .calculadora-container {
   background-color: #ffffff;
   padding: 24px;
@@ -529,7 +477,6 @@ body.dark-mode .tag-cat {
   color: #2b6cb0;
 }
 
-/* Modo Escuro para Calculadora */
 body.dark-mode .calculadora-container {
   background-color: #1e1e1e;
 }
@@ -552,4 +499,218 @@ body.dark-mode .campos-simulador input {
   background-color: #2b2b2b;
   color: white;
   border-color: #444;
+}
+
+/* ==========================================================================
+   TETO DE ORÇAMENTO E FILTROS
+   ========================================================================== */
+
+.btn-excel {
+  padding: 8px 14px;
+  background-color: #276749;
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-excel:hover {
+  background-color: #1c4532;
+}
+
+.orcamento-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.orcamento-container h2 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  color: #2d3748;
+}
+
+.orcamento-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.campo-orcamento {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.campo-orcamento input {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+}
+
+#btn-salvar-limite {
+  padding: 8px 14px;
+  background-color: #3182ce;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.alerta-orcamento p {
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.barra-progresso-fundo {
+  width: 100%;
+  height: 10px;
+  background-color: #e2e8f0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.barra-progresso-preenchimento {
+  height: 100%;
+  width: 0%;
+  background-color: #38a169;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.historico-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.filtros-wrapper {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filtros-wrapper input, .filtros-wrapper select {
+  padding: 6px 10px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+body.dark-mode .orcamento-container {
+  background-color: #1e1e1e;
+}
+
+body.dark-mode .orcamento-container h2,
+body.dark-mode .campo-orcamento label {
+  color: #e0e0e0;
+}
+
+body.dark-mode .campo-orcamento input,
+body.dark-mode .filtros-wrapper input,
+body.dark-mode .filtros-wrapper select {
+  background-color: #2b2b2b;
+  color: #ffffff;
+  border-color: #444;
+}
+
+/* ==========================================================================
+   EFEITO VISUAL: CIFRÃO FLUTUANTE ($/ -$)
+   ========================================================================== */
+.moeda-flutuante {
+  position: fixed;
+  font-size: 2.2rem;
+  font-weight: 900;
+  pointer-events: none;
+  z-index: 9999;
+  animation: flutuarESumir 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.moeda-flutuante.receita {
+  color: #10b981; /* Verde */
+}
+
+.moeda-flutuante.despesa {
+  color: #ef4444; /* Vermelho */
+}
+
+@keyframes flutuarESumir {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.5);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -20px) scale(1.3);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -100px) scale(1);
+  }
+}
+
+/* ==========================================================================
+   MEDIA QUERIES - RESPONSIVIDADE PARA TELEMÓVEL
+   ========================================================================== */
+
+@media (max-width: 600px) {
+  body {
+    padding: 12px 8px;
+  }
+
+  .container {
+    gap: 16px;
+  }
+
+  .header-top {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .botoes-topo {
+    justify-content: center;
+  }
+
+  #form-transacao {
+    grid-template-columns: 1fr; /* Empilha os campos em telas pequenas */
+  }
+
+  .campo-orcamento {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .campo-orcamento input {
+    max-width: 100%;
+  }
+
+  .historico-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filtros-wrapper {
+    max-width: 100%;
+  }
+
+  #lista-transacoes li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .acoes-item {
+    align-self: flex-end;
+  }
 }

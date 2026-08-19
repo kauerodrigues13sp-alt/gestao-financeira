@@ -18,7 +18,8 @@
       <div class="header-top">
         <h1>💰 Gestão Financeira</h1>
         <div class="botoes-topo">
-          <button id="btn-relatorio" class="btn-relatorio" onclick="window.print()">🖨️ Gerar Relatório</button>
+          <button id="btn-relatorio" class="btn-relatorio" onclick="window.print()">🖨️ PDF</button>
+          <button id="btn-exportar-csv" class="btn-excel">📥 Excel</button>
           <button id="btn-tema" class="btn-tema">🌙 Modo Escuro</button>
         </div>
       </div>
@@ -39,15 +40,32 @@
       </div>
     </section>
 
+    <section class="orcamento-container no-print">
+      <h2>⚠️ Teto de Orçamento Mensal</h2>
+      <div class="orcamento-wrapper">
+        <div class="campo-orcamento">
+          <label for="input-limite-orcamento">Limite de Gastos (R$):</label>
+          <input type="number" id="input-limite-orcamento" placeholder="Ex: 2000.00" step="0.01">
+          <button id="btn-salvar-limite">Definir Limite</button>
+        </div>
+        <div id="alerta-orcamento" class="alerta-orcamento">
+          <p id="texto-alerta-orcamento">Nenhum limite definido.</p>
+          <div class="barra-progresso-fundo">
+            <div id="barra-progresso-preenchimento" class="barra-progresso-preenchimento"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="grafico-container">
-      <h2>📊 Resumo Visual por Categoria (Receitas e Despesas)</h2>
+      <h2>📊 Resumo Visual por Categoria</h2>
       <div class="chart-wrapper">
         <canvas id="grafico-categorias"></canvas>
       </div>
     </section>
 
     <section class="calculadora-container no-print">
-      <h2>🧮 Calculadora & Conversor de Moedas (API Tempo Real)</h2>
+      <h2>🧮 Calculadora & Conversor de Moedas (Tempo Real)</h2>
       
       <div class="cotacoes-wrapper">
         <div class="card-cotacao">
@@ -97,11 +115,11 @@
         <div class="campo">
           <label for="categoria">Categoria</label>
           <select id="categoria" required>
-            <option value="Salário">💼 Salário</option>
             <option value="Alimentação">🍔 Alimentação</option>
             <option value="Moradia">🏠 Moradia</option>
             <option value="Transporte">🚗 Transporte</option>
             <option value="Lazer">🎉 Lazer</option>
+            <option value="Salário">💼 Salário</option>
             <option value="Investimentos">📈 Investimentos</option>
             <option value="Outros">📌 Outros</option>
           </select>
@@ -112,7 +130,22 @@
     </section>
 
     <section class="historico-container">
-      <h2>Histórico de Transações</h2>
+      <div class="historico-header">
+        <h2>Histórico de Transações</h2>
+        <div class="filtros-wrapper no-print">
+          <input type="text" id="filtro-pesquisa" placeholder="🔍 Pesquisar...">
+          <select id="filtro-categoria">
+            <option value="todas">Todas Categorias</option>
+            <option value="Alimentação">🍔 Alimentação</option>
+            <option value="Moradia">🏠 Moradia</option>
+            <option value="Transporte">🚗 Transporte</option>
+            <option value="Lazer">🎉 Lazer</option>
+            <option value="Salário">💼 Salário</option>
+            <option value="Investimentos">📈 Investimentos</option>
+            <option value="Outros">📌 Outros</option>
+          </select>
+        </div>
+      </div>
       <ul id="lista-transacoes"></ul>
     </section>
   </div>
