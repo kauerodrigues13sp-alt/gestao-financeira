@@ -1,26 +1,63 @@
 /* ==========================================================================
-   RESET E CONFIGURAÇÃO GLOBAL
+   RESET E VARIÁVEIS GLOBAIS
    ========================================================================== */
+:root {
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --card-border: rgba(255, 255, 255, 0.2);
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
+}
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-  background-color: #f4f6f9;
-  color: #333333;
-  padding: 20px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 /* ==========================================================================
-   CONTAINER PRINCIPAL
+   FUNDOS COM TEXTURA DE PONTOS (PERSONALIDADE VISUAL)
    ========================================================================== */
+body {
+  background-color: #0f172a;
+  background-image: 
+    radial-gradient(rgba(255, 255, 255, 0.15) 1.5px, transparent 1.5px),
+    linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+  background-size: 24px 24px, 100% 100%;
+  background-attachment: fixed;
+  color: var(--text-main);
+  min-height: 100vh;
+  padding: 30px 15px;
+  transition: background 0.4s ease;
+}
 
+body.dark-mode {
+  --card-bg: rgba(30, 41, 59, 0.85);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+
+  background-color: #020617;
+  background-image: 
+    radial-gradient(rgba(255, 255, 255, 0.08) 1.5px, transparent 1.5px),
+    linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e1029 100%);
+  background-size: 24px 24px, 100% 100%;
+  background-attachment: fixed;
+}
+
+/* ==========================================================================
+   CONTAINER E CABEÇALHO
+   ========================================================================== */
 .container {
-  max-width: 800px;
+  max-width: 860px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -28,96 +65,199 @@ body {
 }
 
 header {
-  margin-top: 15px;
+  padding: 10px 0;
 }
 
-header h1 {
-  text-align: center;
-  color: #1a202c;
-  font-size: 1.8rem;
-}
-
-/* ==========================================================================
-   CARDS DE RESUMO
-   ========================================================================== */
-
-.cards-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 16px;
 }
 
-.card {
-  padding: 20px;
-  border-radius: 12px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  text-align: center;
-  transition: transform 0.2s ease;
+/* ==========================================================================
+   DESIGN DA LOGO PERSONALIZADA
+   ========================================================================== */
+.logo-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
-.card:hover {
-  transform: translateY(-3px);
+.logo-icone {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 16px rgba(99, 102, 241, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.card h3 {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 8px;
+.icone-cifra {
+  color: #ffffff;
+  font-size: 1.6rem;
+  font-weight: 900;
+  z-index: 2;
 }
 
-.card p {
-  font-size: 1.5rem;
-  font-weight: bold;
+.icone-grafico {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 12px;
+  height: 12px;
+  border-right: 3px solid #10b981;
+  border-bottom: 3px solid #10b981;
+  border-radius: 2px;
 }
 
-.card-receita {
-  border-top: 5px solid #28a745;
-}
-.card-receita h3, .card-receita p {
-  color: #28a745;
-}
-
-.card-despesa {
-  border-top: 5px solid #dc3545;
-}
-.card-despesa h3, .card-despesa p {
-  color: #dc3545;
+.logo-texto h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
 }
 
-.card-saldo {
-  border-top: 5px solid #007bff;
-}
-.card-saldo h3, .card-saldo p {
-  color: #007bff;
-}
-
-.saldo-negativo {
-  color: #dc3545 !important;
+.logo-texto h1 span {
+  color: #818cf8;
+  font-weight: 400;
+  margin-left: 4px;
 }
 
-.saldo-positivo {
-  color: #28a745 !important;
+.logo-texto .subtitulo {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-top: 2px;
 }
 
 /* ==========================================================================
-   FORMULÁRIO DE LANÇAMENTO E HISTÓRICO
+   BOTÕES VIBRANTES E MARCANTES (TOPO)
    ========================================================================== */
+.botoes-topo {
+  display: flex;
+  gap: 12px;
+}
 
-.form-container, .historico-container {
-  background-color: #ffffff;
-  padding: 24px;
+.btn-topo {
+  padding: 10px 18px;
+  border: none;
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(8px);
 }
 
-.form-container h2, .historico-container h2 {
+.btn-topo:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn-topo:active {
+  transform: translateY(0);
+}
+
+.btn-relatorio {
+  background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+}
+
+.btn-excel {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.btn-tema {
+  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+}
+
+/* ==========================================================================
+   CARDS DE RESUMO (GLASSMORPHISM)
+   ========================================================================== */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  padding: 22px;
+  border-radius: 16px;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.card p {
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.card-receita { border-bottom: 4px solid var(--success); }
+.card-receita h3, .card-receita p { color: var(--success); }
+
+.card-despesa { border-bottom: 4px solid var(--danger); }
+.card-despesa h3, .card-despesa p { color: var(--danger); }
+
+.card-saldo { border-bottom: 4px solid var(--primary); }
+.card-saldo h3, .card-saldo p { color: var(--primary); }
+
+/* ==========================================================================
+   SEÇÕES EM CARD
+   ========================================================================== */
+.form-container, 
+.historico-container, 
+.grafico-container, 
+.calculadora-container, 
+.orcamento-container {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  padding: 26px;
+  border-radius: 18px;
+  box-shadow: var(--shadow-lg);
+}
+
+h2 {
   font-size: 1.2rem;
-  margin-bottom: 16px;
-  color: #2d3748;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
+/* ==========================================================================
+   FORMULÁRIO E INPUTS
+   ========================================================================== */
 #form-transacao {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -134,175 +274,96 @@ header h1 {
 .campo label {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #4a5568;
+  color: var(--text-muted);
 }
 
-.campo input, .campo select {
-  padding: 10px 12px;
-  border: 1px solid #cbd5e0;
-  border-radius: 6px;
+.campo input, .campo select, .campo-orcamento input, .campos-simulador input, .filtros-wrapper input, .filtros-wrapper select {
+  padding: 12px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
   font-size: 0.95rem;
   outline: none;
-  transition: border-color 0.2s;
+  background: rgba(255, 255, 255, 0.7);
+  color: #0f172a;
+  transition: all 0.2s ease;
+}
+
+body.dark-mode .campo input, 
+body.dark-mode .campo select, 
+body.dark-mode .campo-orcamento input, 
+body.dark-mode .campos-simulador input, 
+body.dark-mode .filtros-wrapper input, 
+body.dark-mode .filtros-wrapper select {
+  background: rgba(15, 23, 42, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
 }
 
 .campo input:focus, .campo select:focus {
-  border-color: #007bff;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
 }
 
-button[type="submit"] {
-  padding: 11px 16px;
-  background-color: #007bff;
-  color: #ffffff;
+/* BOTÕES DE AÇÃO */
+.btn-submit, .btn-primario, .btn-sucesso {
+  padding: 12px 20px;
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
   font-size: 0.95rem;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  color: #ffffff;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow-sm);
 }
 
-button[type="submit"]:hover {
-  background-color: #0056b3;
+.btn-submit { background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%); }
+.btn-primario { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); }
+.btn-sucesso { background: linear-gradient(135deg, #10b981 0%, #047857 100%); }
+
+.btn-submit:hover, .btn-primario:hover, .btn-sucesso:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
 }
 
 /* ==========================================================================
-   HISTÓRICO DE TRANSAÇÕES
+   HISTÓRICO E ITENS DA LISTA
    ========================================================================== */
-
 #lista-transacoes {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 #lista-transacoes li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  background-color: #f8f9fa;
-  border-radius: 6px;
-  border-left: 5px solid #ccc;
-}
-
-#lista-transacoes li.item-receita {
-  border-left-color: #28a745;
-}
-
-#lista-transacoes li.item-despesa {
-  border-left-color: #dc3545;
-}
-
-/* ==========================================================================
-   BOTÃO DE TEMA E MODO ESCURO
-   ========================================================================== */
-
-.header-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.btn-tema {
-  padding: 8px 14px;
-  background-color: #e2e8f0;
-  color: #2d3748;
-  border: none;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btn-tema:hover {
-  background-color: #cbd5e0;
-}
-
-body.dark-mode {
-  background-color: #121212;
-  color: #e0e0e0;
-}
-
-body.dark-mode header h1 {
-  color: #ffffff;
-}
-
-body.dark-mode .card,
-body.dark-mode .form-container,
-body.dark-mode .historico-container {
-  background-color: #1e1e1e;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-}
-
-body.dark-mode .form-container h2,
-body.dark-mode .historico-container h2,
-body.dark-mode .campo label {
-  color: #e0e0e0;
-}
-
-body.dark-mode .campo input,
-body.dark-mode .campo select {
-  background-color: #2b2b2b;
-  color: #ffffff;
-  border: 1px solid #444444;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  border-left: 6px solid #cbd5e1;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease;
 }
 
 body.dark-mode #lista-transacoes li {
-  background-color: #2b2b2b;
-  color: #ffffff;
+  background: rgba(15, 23, 42, 0.4);
 }
 
-body.dark-mode .btn-tema {
-  background-color: #333333;
-  color: #f6ad55;
+#lista-transacoes li:hover {
+  transform: translateX(4px);
 }
 
-body.dark-mode .btn-tema:hover {
-  background-color: #444444;
-}
-
-/* ==========================================================================
-   GRÁFICO
-   ========================================================================== */
-
-.grafico-container {
-  background-color: #ffffff;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
-
-.grafico-container h2 {
-  font-size: 1.2rem;
-  margin-bottom: 16px;
-  color: #2d3748;
-}
-
-.chart-wrapper {
-  position: relative;
-  height: 250px;
-  width: 100%;
-}
-
-body.dark-mode .grafico-container {
-  background-color: #1e1e1e;
-}
-
-body.dark-mode .grafico-container h2 {
-  color: #e0e0e0;
-}
-
-/* ==========================================================================
-   AÇÕES DA LISTA (EDITAR / EXCLUIR)
-   ========================================================================== */
+#lista-transacoes li.item-receita { border-left-color: var(--success); }
+#lista-transacoes li.item-despesa { border-left-color: var(--danger); }
 
 .tag-cat {
-  color: #718096;
+  color: var(--text-muted);
   font-size: 0.8rem;
   margin-left: 6px;
+  font-weight: 500;
 }
 
 .info-item {
@@ -312,7 +373,7 @@ body.dark-mode .grafico-container h2 {
 }
 
 .valor-item {
-  font-weight: bold;
+  font-weight: 800;
 }
 
 .acoes-item {
@@ -320,379 +381,221 @@ body.dark-mode .grafico-container h2 {
   gap: 8px;
 }
 
-.btn-acao {
-  background: none;
+.btn-secundario {
+  background: rgba(255, 255, 255, 0.2);
   border: none;
   cursor: pointer;
   font-size: 1.1rem;
-  padding: 4px;
-  border-radius: 4px;
+  padding: 6px 10px;
+  border-radius: 8px;
   transition: background 0.2s;
 }
 
-.btn-acao:hover {
-  background-color: #edf2f7;
-}
-
-body.dark-mode .btn-acao:hover {
-  background-color: #4a5568;
-}
-
-body.dark-mode .tag-cat {
-  color: #a0aec0;
+.btn-secundario:hover {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 /* ==========================================================================
-   BOTÕES DO TOPO E RELATÓRIO
+   GRÁFICO, COTAÇÕES E ORÇAMENTO
    ========================================================================== */
-
-.botoes-topo {
-  display: flex;
-  gap: 10px;
-}
-
-.btn-relatorio {
-  padding: 8px 14px;
-  background-color: #3182ce;
-  color: #ffffff;
-  border: none;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.btn-relatorio:hover {
-  background-color: #2b6cb0;
-}
-
-@media print {
-  .no-print, .botoes-topo, #form-transacao, .acoes-item, .enabled {
-    display: none !important;
-  }
-
-  body {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    padding: 0;
-  }
-
-  .container {
-    max-width: 100%;
-  }
-
-  .card, .grafico-container, .historico-container {
-    box-shadow: none !important;
-    border: 1px solid #ddd;
-  }
-}
-
-/* ==========================================================================
-   CALCULADORA E CONVERSOR
-   ========================================================================== */
-
-.calculadora-container {
-  background-color: #ffffff;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.calculadora-container h2 {
-  font-size: 1.2rem;
-  color: #2d3748;
+.chart-wrapper {
+  position: relative;
+  height: 260px;
+  width: 100%;
 }
 
 .cotacoes-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
+  margin-bottom: 20px;
 }
 
 .card-cotacao {
-  background-color: #f7fafc;
-  border: 1px solid #e2e8f0;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   padding: 16px;
-  border-radius: 8px;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
 }
 
-.card-cotacao strong {
-  font-size: 1.1rem;
-  color: #2b6cb0;
-}
-
-.card-cotacao small {
-  color: #4a5568;
-  font-weight: 600;
-}
-
-.simulador-meta {
-  border-top: 1px solid #e2e8f0;
-  padding-top: 16px;
-}
-
-.simulador-meta h3 {
-  font-size: 1rem;
-  margin-bottom: 12px;
-  color: #4a5568;
-}
-
-.campos-simulador {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px;
-}
-
-.campos-simulador input {
-  padding: 8px 12px;
-  border: 1px solid #cbd5e0;
-  border-radius: 6px;
-}
-
-#btn-calcular-meta {
-  padding: 8px 12px;
-  background-color: #38a169;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-#btn-calcular-meta:hover {
-  background-color: #2f855a;
-}
-
-.resultado-meta {
-  margin-top: 10px;
-  font-weight: bold;
-  color: #2b6cb0;
-}
-
-body.dark-mode .calculadora-container {
-  background-color: #1e1e1e;
-}
-
-body.dark-mode .calculadora-container h2,
-body.dark-mode .simulador-meta h3 {
-  color: #e0e0e0;
-}
-
 body.dark-mode .card-cotacao {
-  background-color: #2b2b2b;
-  border-color: #444;
+  background: rgba(15, 23, 42, 0.4);
 }
 
-body.dark-mode .card-cotacao small {
-  color: #cbd5e0;
-}
-
-body.dark-mode .campos-simulador input {
-  background-color: #2b2b2b;
-  color: white;
-  border-color: #444;
-}
-
-/* ==========================================================================
-   TETO DE ORÇAMENTO E FILTROS
-   ========================================================================== */
-
-.btn-excel {
-  padding: 8px 14px;
-  background-color: #276749;
-  color: #ffffff;
-  border: none;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.btn-excel:hover {
-  background-color: #1c4532;
-}
-
-.orcamento-container {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
-
-.orcamento-container h2 {
-  font-size: 1.1rem;
-  margin-bottom: 12px;
-  color: #2d3748;
-}
-
-.orcamento-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.campo-orcamento {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.campo-orcamento input {
-  padding: 8px 12px;
-  border: 1px solid #cbd5e0;
-  border-radius: 6px;
-}
-
-#btn-salvar-limite {
-  padding: 8px 14px;
-  background-color: #3182ce;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.alerta-orcamento p {
-  font-weight: bold;
-  font-size: 0.9rem;
-  margin-bottom: 6px;
+.card-cotacao strong {
+  font-size: 1.2rem;
+  color: var(--primary);
 }
 
 .barra-progresso-fundo {
   width: 100%;
-  height: 10px;
-  background-color: #e2e8f0;
-  border-radius: 5px;
+  height: 12px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
   overflow: hidden;
+  margin-top: 8px;
 }
 
 .barra-progresso-preenchimento {
   height: 100%;
   width: 0%;
-  background-color: #38a169;
-  transition: width 0.3s ease, background-color 0.3s ease;
-}
-
-.historico-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.filtros-wrapper {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.filtros-wrapper input, .filtros-wrapper select {
-  padding: 6px 10px;
-  border: 1px solid #cbd5e0;
-  border-radius: 6px;
-  font-size: 0.85rem;
-}
-
-body.dark-mode .orcamento-container {
-  background-color: #1e1e1e;
-}
-
-body.dark-mode .orcamento-container h2,
-body.dark-mode .campo-orcamento label {
-  color: #e0e0e0;
-}
-
-body.dark-mode .campo-orcamento input,
-body.dark-mode .filtros-wrapper input,
-body.dark-mode .filtros-wrapper select {
-  background-color: #2b2b2b;
-  color: #ffffff;
-  border-color: #444;
+  background: var(--success);
+  transition: width 0.4s ease, background-color 0.4s ease;
 }
 
 /* ==========================================================================
-   EFEITO VISUAL: CIFRÃO FLUTUANTE ($/ -$)
+   EFEITO VISUAL DE CIFRÃO FLUTUANTE
    ========================================================================== */
 .moeda-flutuante {
   position: fixed;
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   font-weight: 900;
   pointer-events: none;
   z-index: 9999;
   animation: flutuarESumir 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-.moeda-flutuante.receita {
-  color: #10b981; /* Verde */
-}
-
-.moeda-flutuante.despesa {
-  color: #ef4444; /* Vermelho */
-}
+.moeda-flutuante.receita { color: var(--success); }
+.moeda-flutuante.despesa { color: var(--danger); }
 
 @keyframes flutuarESumir {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, 0) scale(0.5);
+  0% { opacity: 0; transform: translate(-50%, 0) scale(0.5); }
+  20% { opacity: 1; transform: translate(-50%, -20px) scale(1.3); }
+  100% { opacity: 0; transform: translate(-50%, -100px) scale(1); }
+}
+
+/* ==========================================================================
+   GERENCIADOR DE GESTÕES (CARTEIRAS)
+   ========================================================================== */
+.gestao-seletor-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 10px 16px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.gestao-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.gestao-info select {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  color: #0f172a;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.gestao-acoes {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-mini {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #ffffff;
+  transition: transform 0.2s ease;
+}
+
+.btn-mini:hover {
+  transform: translateY(-2px);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+}
+
+/* ==========================================================================
+   IMPRESSÃO
+   ========================================================================== */
+@media print {
+  .no-print, .botoes-topo, #form-transacao, .acoes-item, .enabled, .gestao-seletor-container {
+    display: none !important;
   }
-  20% {
-    opacity: 1;
-    transform: translate(-50%, -20px) scale(1.3);
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
   }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -100px) scale(1);
+  .card, .grafico-container, .historico-container {
+    box-shadow: none !important;
+    border: 1px solid #ddd;
+    background: #ffffff !important;
   }
 }
 
 /* ==========================================================================
-   MEDIA QUERIES - RESPONSIVIDADE PARA TELEMÓVEL
+   AJUSTES PARA TELEMÓVEL / CELULAR (MAX-WIDTH: 600PX)
    ========================================================================== */
-
 @media (max-width: 600px) {
   body {
-    padding: 12px 8px;
-  }
-
-  .container {
-    gap: 16px;
+    padding: 15px 10px;
   }
 
   .header-top {
     flex-direction: column;
-    align-items: stretch;
+    text-align: center;
+  }
+
+  .logo-box {
+    flex-direction: column;
     text-align: center;
   }
 
   .botoes-topo {
+    width: 100%;
     justify-content: center;
   }
 
+  .btn-topo {
+    flex: 1;
+    justify-content: center;
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+
+  .gestao-seletor-container {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .gestao-info {
+    justify-content: space-between;
+  }
+
+  .gestao-acoes {
+    justify-content: flex-end;
+  }
+
   #form-transacao {
-    grid-template-columns: 1fr; /* Empilha os campos em telas pequenas */
+    grid-template-columns: 1fr;
   }
 
   .campo-orcamento {
     flex-direction: column;
     align-items: stretch;
-  }
-
-  .campo-orcamento input {
-    max-width: 100%;
   }
 
   .historico-header {
@@ -701,16 +604,318 @@ body.dark-mode .filtros-wrapper select {
   }
 
   .filtros-wrapper {
-    max-width: 100%;
+    flex-direction: column;
   }
 
   #lista-transacoes li {
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
+    gap: 10px;
   }
 
   .acoes-item {
     align-self: flex-end;
+  }
+}
+
+/* ==========================================================================
+   BOTÃO FLUTUANTE (FAB) PARA GESTÃO DE CARTEIRAS
+   ========================================================================== */
+.fab-carteira-wrapper {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.fab-btn-principal {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 20px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.fab-btn-principal:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 14px 30px rgba(99, 102, 241, 0.5);
+}
+
+.fab-menu-carteiras {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 16px;
+  width: 220px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fab-menu-carteiras.hidden {
+  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.fab-menu-carteiras h4 {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.fab-menu-carteiras select {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #ffffff;
+  color: #0f172a;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.fab-acoes button {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 600px) {
+  .fab-carteira-wrapper {
+    bottom: 16px;
+    right: 16px;
+  }
+}
+
+/* ==========================================================================
+   BOTÃO FLUTUANTE (FAB) E MODAL MELHORADOS
+   ========================================================================== */
+.fab-carteira-wrapper {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+/* Botão principal em grande destaque */
+.fab-btn-principal {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+  padding: 16px 24px;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.5), 0 0 15px rgba(168, 85, 247, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: pulsarBotao 3s infinite;
+}
+
+.fab-btn-principal:hover {
+  transform: scale(1.08) translateY(-4px);
+  box-shadow: 0 15px 35px rgba(99, 102, 241, 0.7), 0 0 25px rgba(168, 85, 247, 0.6);
+  animation: none;
+}
+
+.fab-icone {
+  font-size: 1.3rem;
+}
+
+@keyframes pulsarBotao {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+/* Painel Pop-up Ajustado */
+.fab-menu-carteiras {
+  background: rgba(15, 23, 42, 0.98);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 20px;
+  width: 280px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: all 0.3s ease;
+}
+
+.fab-menu-carteiras.hidden {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+}
+
+.fab-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fab-header h4 {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.btn-fechar-x {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.4rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.btn-fechar-x:hover {
+  color: #ffffff;
+}
+
+.fab-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fab-campo label {
+  color: #cbd5e1;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.fab-campo select, .fab-campo input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  font-size: 0.88rem;
+  outline: none;
+}
+
+.fab-campo select option {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.fab-divisor {
+  border: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 2px 0;
+}
+
+.btn-bloco {
+  width: 100%;
+  padding: 12px;
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   RODAPÉ DE CRÉDITOS E REDES SOCIAIS
+   ========================================================================== */
+.rodape-desenvolvedor {
+  margin-top: 40px;
+  padding: 24px 20px;
+  background: rgba(15, 23, 42, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  text-align: center;
+}
+
+.rodape-conteudo {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.rodape-conteudo p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.rodape-conteudo strong {
+  color: #ffffff;
+}
+
+.rodape-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-rede {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-linkedin {
+  background-color: #0a66c2;
+}
+
+.btn-linkedin:hover {
+  background-color: #084e96;
+  transform: translateY(-2px);
+}
+
+.btn-instagram {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.btn-instagram:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.direitos {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+@media print {
+  .rodape-desenvolvedor {
+    display: none;
   }
 }
